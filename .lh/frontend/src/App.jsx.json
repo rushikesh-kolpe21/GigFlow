@@ -1,0 +1,66 @@
+{
+    "sourceFile": "frontend/src/App.jsx",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 12,
+            "patches": [
+                {
+                    "date": 1768152272476,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1768153254339,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,8 +3,9 @@\n import { BrowserRouter, Routes, Route, Navigate } from \"react-router-dom\";\n import { Signup } from './Landing/Auth/Signup.jsx';\n import { Login } from './Landing/Auth/Login.jsx';\n import { LoggedIn } from './Landing/Home/LoggedIn.jsx';\n+import Navbar from '../Navbar.jsx';\n \n \n export const App = () => {\n \n@@ -28,8 +29,9 @@\n \n   return (\n     <div>\n       <BrowserRouter>\n+      <Navbar/>\n         <Routes>\n           <Route\n             path=\"/register\"\n             element={\n"
+                },
+                {
+                    "date": 1768153482917,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -29,9 +29,9 @@\n \n   return (\n     <div>\n       <BrowserRouter>\n-      <Navbar/>\n+      {/* <Navbar/> */}\n         <Routes>\n           <Route\n             path=\"/register\"\n             element={\n"
+                },
+                {
+                    "date": 1768153527128,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,11 +3,11 @@\n import { BrowserRouter, Routes, Route, Navigate } from \"react-router-dom\";\n import { Signup } from './Landing/Auth/Signup.jsx';\n import { Login } from './Landing/Auth/Login.jsx';\n import { LoggedIn } from './Landing/Home/LoggedIn.jsx';\n-import Navbar from '../Navbar.jsx';\n \n \n+\n export const App = () => {\n \n    // Authentication state (example)\n   const [isAuthenticated, setIsAuthenticated] = useState(() => {\n@@ -29,9 +29,9 @@\n \n   return (\n     <div>\n       <BrowserRouter>\n-      {/* <Navbar/> */}\n+     \n         <Routes>\n           <Route\n             path=\"/register\"\n             element={\n"
+                },
+                {
+                    "date": 1768182871683,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,8 +3,9 @@\n import { BrowserRouter, Routes, Route, Navigate } from \"react-router-dom\";\n import { Signup } from './Landing/Auth/Signup.jsx';\n import { Login } from './Landing/Auth/Login.jsx';\n import { LoggedIn } from './Landing/Home/LoggedIn.jsx';\n+import Navbar from '../Navbar.jsx';\n \n \n \n export const App = () => {\n@@ -29,9 +30,9 @@\n \n   return (\n     <div>\n       <BrowserRouter>\n-     \n+     <Navbar/>\n         <Routes>\n           <Route\n             path=\"/register\"\n             element={\n"
+                },
+                {
+                    "date": 1768184706720,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n import { useState } from 'react';\n import { BrowserRouter, Routes, Route, Navigate } from \"react-router-dom\";\n import { Signup } from './Landing/Auth/Signup.jsx';\n import { Login } from './Landing/Auth/Login.jsx';\n-import { LoggedIn } from './Landing/Home/LoggedIn.jsx';\n+import { LoggedIn } from './Landing/Browse Jobs/LoggedIn.jsx';\n import Navbar from '../Navbar.jsx';\n \n \n \n"
+                },
+                {
+                    "date": 1768187065527,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,8 +4,9 @@\n import { Signup } from './Landing/Auth/Signup.jsx';\n import { Login } from './Landing/Auth/Login.jsx';\n import { LoggedIn } from './Landing/Browse Jobs/LoggedIn.jsx';\n import Navbar from '../Navbar.jsx';\n+import { BrowseJobs } from './Landing/Browse Jobs/BrowseJobs.jsx';\n \n \n \n export const App = () => {\n@@ -32,8 +33,18 @@\n     <div>\n       <BrowserRouter>\n      <Navbar/>\n         <Routes>\n+\n+           {/* Protected routes */}\n+        <Route\n+          path=\"/menu\"\n+          element={\n+            <PrivateRoute>\n+             <BrowseJobs/>\n+            </PrivateRoute>\n+          }\n+        />\n           <Route\n             path=\"/register\"\n             element={\n               <PublicRoute>\n"
+                },
+                {
+                    "date": 1768187423515,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -36,9 +36,9 @@\n         <Routes>\n \n            {/* Protected routes */}\n         <Route\n-          path=\"/menu\"\n+          path=\"/gigs\"\n           element={\n             <PrivateRoute>\n              <BrowseJobs/>\n             </PrivateRoute>\n"
+                },
+                {
+                    "date": 1768190372148,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,8 +5,9 @@\n import { Login } from './Landing/Auth/Login.jsx';\n import { LoggedIn } from './Landing/Browse Jobs/LoggedIn.jsx';\n import Navbar from '../Navbar.jsx';\n import { BrowseJobs } from './Landing/Browse Jobs/BrowseJobs.jsx';\n+import PostJob from './Landing/Post Job/PostJob.jsx';\n \n \n \n export const App = () => {\n@@ -43,8 +44,20 @@\n              <BrowseJobs/>\n             </PrivateRoute>\n           }\n         />\n+\n+        \n+\n+           <Route\n+          path=\"/post-job\"\n+          element={\n+            <PrivateRoute>\n+             <PostJob/>\n+            </PrivateRoute>\n+          }\n+        />\n+\n           <Route\n             path=\"/register\"\n             element={\n               <PublicRoute>\n"
+                },
+                {
+                    "date": 1768195155245,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,8 +6,9 @@\n import { LoggedIn } from './Landing/Browse Jobs/LoggedIn.jsx';\n import Navbar from '../Navbar.jsx';\n import { BrowseJobs } from './Landing/Browse Jobs/BrowseJobs.jsx';\n import PostJob from './Landing/Post Job/PostJob.jsx';\n+import ApplyBid from './Landing/Browse Jobs/ApplyBid.jsx';\n \n \n \n export const App = () => {\n@@ -45,8 +46,16 @@\n             </PrivateRoute>\n           }\n         />\n \n+ <Route\n+          path=\"/apply/:gigIdgs\"\n+          element={\n+            <PrivateRoute>\n+             <ApplyBid/>\n+            </PrivateRoute>\n+          }\n+        />\n         \n \n            <Route\n           path=\"/post-job\"\n"
+                },
+                {
+                    "date": 1768196235551,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -47,9 +47,9 @@\n           }\n         />\n \n  <Route\n-          path=\"/apply/:gigIdgs\"\n+          path=\"/apply/:gigId\"\n           element={\n             <PrivateRoute>\n              <ApplyBid/>\n             </PrivateRoute>\n"
+                },
+                {
+                    "date": 1768198562137,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,8 +7,9 @@\n import Navbar from '../Navbar.jsx';\n import { BrowseJobs } from './Landing/Browse Jobs/BrowseJobs.jsx';\n import PostJob from './Landing/Post Job/PostJob.jsx';\n import ApplyBid from './Landing/Browse Jobs/ApplyBid.jsx';\n+import MyApplications from './Landing/MyApplications/MyApplications.jsx';\n \n \n \n export const App = () => {\n@@ -47,8 +48,17 @@\n           }\n         />\n \n  <Route\n+          path=\"/my-applications\"\n+          element={\n+            <PrivateRoute>\n+             <MyApplications/>\n+            </PrivateRoute>\n+          }\n+        />\n+\n+ <Route\n           path=\"/apply/:gigId\"\n           element={\n             <PrivateRoute>\n              <ApplyBid/>\n"
+                },
+                {
+                    "date": 1768199165554,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,8 +8,9 @@\n import { BrowseJobs } from './Landing/Browse Jobs/BrowseJobs.jsx';\n import PostJob from './Landing/Post Job/PostJob.jsx';\n import ApplyBid from './Landing/Browse Jobs/ApplyBid.jsx';\n import MyApplications from './Landing/MyApplications/MyApplications.jsx';\n+import ViewBids from './Landing/MyJob/ViewBids.jsx';\n \n \n \n export const App = () => {\n@@ -47,8 +48,20 @@\n             </PrivateRoute>\n           }\n         />\n \n+\n+<Route\n+          path=\"/gigs/:gigId/bids\"\n+          element={\n+            <PrivateRoute>\n+             <ViewBids/>\n+            </PrivateRoute>\n+          }\n+        />\n+\n+\n+\n  <Route\n           path=\"/my-applications\"\n           element={\n             <PrivateRoute>\n"
+                }
+            ],
+            "date": 1768152272476,
+            "name": "Commit-0",
+            "content": "import React from 'react'\nimport { useState } from 'react';\nimport { BrowserRouter, Routes, Route, Navigate } from \"react-router-dom\";\nimport { Signup } from './Landing/Auth/Signup.jsx';\nimport { Login } from './Landing/Auth/Login.jsx';\nimport { LoggedIn } from './Landing/Home/LoggedIn.jsx';\n\n\nexport const App = () => {\n\n   // Authentication state (example)\n  const [isAuthenticated, setIsAuthenticated] = useState(() => {\n    return !!localStorage.getItem('token'); // Check for token in localStorage on initial load hey ki nahi\n  });\n\n  // Private Route component for protected routes only for authenticated users\nconst PrivateRoute = ({ children }) => {\n  const token = localStorage.getItem(\"token\");\n  return token ? children : <Navigate to=\"/login\" replace />;\n};\n\n// public route component for login and signup pages\nconst PublicRoute = ({ children }) => {\n  const token = localStorage.getItem(\"token\");\n  return token ? <Navigate to=\"/\" replace /> : children;\n};\n\n\n  return (\n    <div>\n      <BrowserRouter>\n        <Routes>\n          <Route\n            path=\"/register\"\n            element={\n              <PublicRoute>\n                <Signup setIsAuthenticated={setIsAuthenticated} />\n              </PublicRoute>\n            }\n          />\n\n          <Route\n            path=\"/login\"\n            element={\n              <PublicRoute>\n                <Login setIsAuthenticated={setIsAuthenticated} />\n              </PublicRoute>\n            }\n          />\n\n          <Route\n            path=\"/\"\n            element={\n              <PrivateRoute>\n                <LoggedIn />\n              </PrivateRoute>\n            }\n          />\n\n          <Route path=\"*\" element={<Navigate to=\"/login\" replace />} />\n        </Routes>\n      </BrowserRouter>\n    </div>\n  )\n}\n"
+        }
+    ]
+}

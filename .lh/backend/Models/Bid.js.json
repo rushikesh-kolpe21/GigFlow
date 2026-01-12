@@ -1,0 +1,22 @@
+{
+    "sourceFile": "backend/Models/Bid.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1768192787355,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1768194835429,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,17 +1,26 @@\n+// models/Bid.js\r\n const mongoose = require(\"mongoose\");\r\n \r\n const bidSchema = new mongoose.Schema({\r\n   gigId: {\r\n     type: mongoose.Schema.Types.ObjectId,\r\n-    ref: \"Gig\"\r\n+    ref: \"Gig\",\r\n+    required: true\r\n   },\r\n   freelancerId: {\r\n     type: mongoose.Schema.Types.ObjectId,\r\n-    ref: \"User\"\r\n+    ref: \"User\",\r\n+    required: true\r\n   },\r\n-  message: String,\r\n-  price: Number,\r\n+  message: {\r\n+    type: String,\r\n+    required: true\r\n+  },\r\n+  price: {\r\n+    type: Number,\r\n+    required: true\r\n+  },\r\n   status: {\r\n     type: String,\r\n     enum: [\"pending\", \"hired\", \"rejected\"],\r\n     default: \"pending\"\r\n"
+                }
+            ],
+            "date": 1768192787354,
+            "name": "Commit-0",
+            "content": "const mongoose = require(\"mongoose\");\r\n\r\nconst bidSchema = new mongoose.Schema({\r\n  gigId: {\r\n    type: mongoose.Schema.Types.ObjectId,\r\n    ref: \"Gig\"\r\n  },\r\n  freelancerId: {\r\n    type: mongoose.Schema.Types.ObjectId,\r\n    ref: \"User\"\r\n  },\r\n  message: String,\r\n  price: Number,\r\n  status: {\r\n    type: String,\r\n    enum: [\"pending\", \"hired\", \"rejected\"],\r\n    default: \"pending\"\r\n  }\r\n});\r\n\r\nmodule.exports = mongoose.model(\"Bid\", bidSchema);\r\n"
+        }
+    ]
+}

@@ -1,0 +1,30 @@
+{
+    "sourceFile": "backend/Middlewares/auth.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 3,
+            "patches": [
+                {
+                    "date": 1768195674575,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1768195794197,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,28 +1,28 @@\n-const jwt = require(\"jsonwebtoken\");\r\n+// const jwt = require(\"jsonwebtoken\");\r\n \r\n-const auth = (req, res, next) => {\r\n-  try {\r\n-    // 1️⃣ Cookie se token nikalo\r\n-    const token = req.cookies.token;\r\n+// const auth = (req, res, next) => {\r\n+//   try {\r\n+//     // 1️⃣ Cookie se token nikalo\r\n+//     const token = req.cookies.token;\r\n \r\n-    // 2️⃣ Token nahi hai → not logged in\r\n-    if (!token) {\r\n-      return res.status(401).json({ message: \"Not authenticated\" });\r\n-    }\r\n+//     // 2️⃣ Token nahi hai → not logged in\r\n+//     if (!token) {\r\n+//       return res.status(401).json({ message: \"Not authenticated\" });\r\n+//     }\r\n \r\n-    // 3️⃣ Token verify karo\r\n-    const decoded = jwt.verify(token, process.env.JWT_SECRET);\r\n+//     // 3️⃣ Token verify karo\r\n+//     const decoded = jwt.verify(token, process.env.JWT_SECRET);\r\n \r\n-    // 4️⃣ req.user set karo (VERY IMPORTANT)\r\n-    req.user = {\r\n-      id: decoded.id\r\n-    };\r\n+//     // 4️⃣ req.user set karo (VERY IMPORTANT)\r\n+//     req.user = {\r\n+//       id: decoded.id\r\n+//     };\r\n \r\n-    // 5️⃣ Next route pe jao\r\n-    next();\r\n-  } catch (error) {\r\n-    return res.status(401).json({ message: \"Invalid or expired token\" });\r\n-  }\r\n-};\r\n+//     // 5️⃣ Next route pe jao\r\n+//     next();\r\n+//   } catch (error) {\r\n+//     return res.status(401).json({ message: \"Invalid or expired token\" });\r\n+//   }\r\n+// };\r\n \r\n-module.exports = auth;\r\n+// module.exports = auth;\r\n"
+                },
+                {
+                    "date": 1768195841971,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,28 +1,28 @@\n-// const jwt = require(\"jsonwebtoken\");\r\n+const jwt = require(\"jsonwebtoken\");\r\n \r\n-// const auth = (req, res, next) => {\r\n-//   try {\r\n-//     // 1️⃣ Cookie se token nikalo\r\n-//     const token = req.cookies.token;\r\n+const auth = (req, res, next) => {\r\n+  try {\r\n+    // 1️⃣ Cookie se token nikalo\r\n+    const token = req.cookies.token;\r\n \r\n-//     // 2️⃣ Token nahi hai → not logged in\r\n-//     if (!token) {\r\n-//       return res.status(401).json({ message: \"Not authenticated\" });\r\n-//     }\r\n+    // 2️⃣ Token nahi hai → not logged in\r\n+    if (!token) {\r\n+      return res.status(401).json({ message: \"Not authenticated\" });\r\n+    }\r\n \r\n-//     // 3️⃣ Token verify karo\r\n-//     const decoded = jwt.verify(token, process.env.JWT_SECRET);\r\n+    // 3️⃣ Token verify karo\r\n+    const decoded = jwt.verify(token, process.env.JWT_SECRET);\r\n \r\n-//     // 4️⃣ req.user set karo (VERY IMPORTANT)\r\n-//     req.user = {\r\n-//       id: decoded.id\r\n-//     };\r\n+    // 4️⃣ req.user set karo (VERY IMPORTANT)\r\n+    req.user = {\r\n+      id: decoded.id\r\n+    };\r\n \r\n-//     // 5️⃣ Next route pe jao\r\n-//     next();\r\n-//   } catch (error) {\r\n-//     return res.status(401).json({ message: \"Invalid or expired token\" });\r\n-//   }\r\n-// };\r\n+    // 5️⃣ Next route pe jao\r\n+    next();\r\n+  } catch (error) {\r\n+    return res.status(401).json({ message: \"Invalid or expired token\" });\r\n+  }\r\n+};\r\n \r\n-// module.exports = auth;\r\n+module.exports = auth;\r\n"
+                },
+                {
+                    "date": 1768196018089,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,11 +12,11 @@\n \r\n     // 3️⃣ Token verify karo\r\n     const decoded = jwt.verify(token, process.env.JWT_SECRET);\r\n \r\n-    // 4️⃣ req.user set karo (VERY IMPORTANT)\r\n+    // 4️⃣ req.user set karo - MATCH THE JWT PAYLOAD NAME (userId, not id)\r\n     req.user = {\r\n-      id: decoded.id\r\n+      id: decoded.userId\r\n     };\r\n \r\n     // 5️⃣ Next route pe jao\r\n     next();\r\n"
+                }
+            ],
+            "date": 1768195674575,
+            "name": "Commit-0",
+            "content": "const jwt = require(\"jsonwebtoken\");\r\n\r\nconst auth = (req, res, next) => {\r\n  try {\r\n    // 1️⃣ Cookie se token nikalo\r\n    const token = req.cookies.token;\r\n\r\n    // 2️⃣ Token nahi hai → not logged in\r\n    if (!token) {\r\n      return res.status(401).json({ message: \"Not authenticated\" });\r\n    }\r\n\r\n    // 3️⃣ Token verify karo\r\n    const decoded = jwt.verify(token, process.env.JWT_SECRET);\r\n\r\n    // 4️⃣ req.user set karo (VERY IMPORTANT)\r\n    req.user = {\r\n      id: decoded.id\r\n    };\r\n\r\n    // 5️⃣ Next route pe jao\r\n    next();\r\n  } catch (error) {\r\n    return res.status(401).json({ message: \"Invalid or expired token\" });\r\n  }\r\n};\r\n\r\nmodule.exports = auth;\r\n"
+        }
+    ]
+}

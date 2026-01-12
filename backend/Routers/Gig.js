@@ -1,0 +1,41 @@
+const express = require('express');
+const router = express.Router();
+const Gig = require('../Models/Gig');
+const auth = require('../Middlewares/auth');
+
+// GET all gigs
+router.get('/', async (req, res) => {
+  try {
+    const search = req.query.search || "";
+
+    const gigs = await Gig.find({
+      status: "open",
+      title: { $regex: search, $options: "i" }
+    });
+
+    res.json(gigs);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// POST new gig
+router.post("/", auth, async (req, res) => {
+  try {
+    const { title, description, budget } = req.body;
+
+    const gig = await Gig.create({
+      title,
+      description,
+      budget,
+      ownerId: req.user.id,
+      status: "open"
+    });
+
+    res.status(201).json(gig);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+module.exports = router;

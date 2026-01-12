@@ -1,0 +1,18 @@
+{
+    "sourceFile": "frontend/src/Landing/MyJob/MyJobs.jsx",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1768201349572,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1768201349572,
+            "name": "Commit-0",
+            "content": "import { useEffect, useState } from \"react\";\r\nimport axios from \"axios\";\r\nimport { useNavigate } from \"react-router-dom\";\r\n\r\nexport default function MyJobs() {\r\n  const [jobs, setJobs] = useState([]);\r\n  const [error, setError] = useState(\"\");\r\n  const [loading, setLoading] = useState(true);\r\n  const navigate = useNavigate();\r\n\r\n  const currentUser = (() => {\r\n    try {\r\n      return JSON.parse(localStorage.getItem(\"user\"));\r\n    } catch {\r\n      return null;\r\n    }\r\n  })();\r\n\r\n  useEffect(() => {\r\n    async function loadMyJobs() {\r\n      try {\r\n        setLoading(true);\r\n        // Fetch all gigs (public endpoint)\r\n        const res = await axios.get(\"http://localhost:5000/api/gigs\");\r\n        // Filter for jobs owned by current user\r\n        const myJobs = res.data.filter(gig => gig.ownerId === currentUser?.id);\r\n        setJobs(myJobs);\r\n      } catch (err) {\r\n        setError(err.message || \"Failed to load jobs\");\r\n      } finally {\r\n        setLoading(false);\r\n      }\r\n    }\r\n\r\n    if (currentUser?.id) {\r\n      loadMyJobs();\r\n    }\r\n  }, []);\r\n\r\n  if (loading) return <div style={{ padding: 20 }}>Loading...</div>;\r\n  if (error) return <div style={{ padding: 20 }}>Error: {error}</div>;\r\n\r\n  return (\r\n    <div style={{ padding: \"20px\" }}>\r\n      <h2>My Posted Jobs</h2>\r\n\r\n      {jobs.length === 0 && <p>You haven't posted any jobs yet. <a href=\"/post-job\">Post one now</a></p>}\r\n\r\n      {jobs.map((job) => (\r\n        <div\r\n          key={job._id}\r\n          style={{\r\n            border: \"1px solid #ccc\",\r\n            padding: \"15px\",\r\n            marginBottom: \"15px\",\r\n            borderRadius: \"5px\"\r\n          }}\r\n        >\r\n          <h3>{job.title}</h3>\r\n          <p>{job.description}</p>\r\n          <p><b>Budget:</b> ₹{job.budget}</p>\r\n          <p><b>Status:</b> {job.status}</p>\r\n\r\n          <button\r\n            style={{\r\n              marginRight: \"10px\",\r\n              padding: \"8px 15px\",\r\n              backgroundColor: \"#007bff\",\r\n              color: \"white\",\r\n              border: \"none\",\r\n              borderRadius: \"4px\",\r\n              cursor: \"pointer\"\r\n            }}\r\n            onClick={() => navigate(`/gigs/${job._id}/bids`)}\r\n          >\r\n            View Applications\r\n          </button>\r\n\r\n          <button\r\n            style={{\r\n              padding: \"8px 15px\",\r\n              backgroundColor: \"#6c757d\",\r\n              color: \"white\",\r\n              border: \"none\",\r\n              borderRadius: \"4px\",\r\n              cursor: \"pointer\"\r\n            }}\r\n            onClick={() => navigate(`/edit-job/${job._id}`)}\r\n          >\r\n            Edit\r\n          </button>\r\n        </div>\r\n      ))}\r\n    </div>\r\n  );\r\n}\r\n"
+        }
+    ]
+}

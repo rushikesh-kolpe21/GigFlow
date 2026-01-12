@@ -1,0 +1,18 @@
+{
+    "sourceFile": "frontend/src/Landing/Browse Jobs/ApplyBid.jsx",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1768195056474,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1768195056473,
+            "name": "Commit-0",
+            "content": "import { useState } from \"react\";\r\nimport axios from \"axios\";\r\nimport { useParams } from \"react-router-dom\";\r\n\r\nfunction ApplyBid() {\r\n  const { gigId } = useParams();\r\n\r\n  const [message, setMessage] = useState(\"\");\r\n  const [price, setPrice] = useState(\"\");\r\n  const [msg, setMsg] = useState(\"\");\r\n\r\n  const submitBid = async (e) => {\r\n    e.preventDefault();\r\n\r\n    try {\r\n      await axios.post(\r\n        \"http://localhost:5000/api/bids\",\r\n        { gigId, message, price },\r\n        { withCredentials: true } // 🔥 cookie send hogi\r\n      );\r\n\r\n      setMsg(\"✅ Bid submitted successfully\");\r\n      setMessage(\"\");\r\n      setPrice(\"\");\r\n    } catch (err) {\r\n      setMsg(err.response?.data?.message || \"❌ Error\");\r\n    }\r\n  };\r\n\r\n  return (\r\n    <div>\r\n      <h2>Apply for Job</h2>\r\n\r\n      <form onSubmit={submitBid}>\r\n        <textarea\r\n          placeholder=\"Your message\"\r\n          value={message}\r\n          onChange={(e) => setMessage(e.target.value)}\r\n          required\r\n        />\r\n\r\n        <input\r\n          type=\"number\"\r\n          placeholder=\"Your price\"\r\n          value={price}\r\n          onChange={(e) => setPrice(e.target.value)}\r\n          required\r\n        />\r\n\r\n        <button type=\"submit\">Submit Bid</button>\r\n      </form>\r\n\r\n      {msg && <p>{msg}</p>}\r\n    </div>\r\n  );\r\n}\r\n\r\nexport default ApplyBid;\r\n"
+        }
+    ]
+}

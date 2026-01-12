@@ -1,0 +1,26 @@
+{
+    "sourceFile": "frontend/src/Landing/Browse Jobs/BrowseJobs.jsx",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1768184791847,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1768187069324,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,24 +1,35 @@\n+import { useEffect, useState } from \"react\";\r\n import axios from \"axios\";\r\n-import { useEffect, useState } from \"react\";\r\n \r\n export const BrowseJobs = () => {\r\n   const [gigs, setGigs] = useState([]);\r\n \r\n   useEffect(() => {\r\n-    axios.get(\"http://localhost:5000/api/gigs\")\r\n-      .then(res => setGigs(res.data));\r\n+    axios\r\n+      .get(\"http://localhost:5000/api/gigs\")\r\n+      .then((res) => setGigs(res.data))\r\n+      .catch((err) => console.log(err));\r\n   }, []);\r\n \r\n   return (\r\n-    <div>\r\n+    <div style={{ padding: \"20px\" }}>\r\n       <h2>Browse Jobs</h2>\r\n \r\n-      {gigs.map(gig => (\r\n-        <div key={gig._id}>\r\n+      {gigs.length === 0 && <p>No jobs available</p>}\r\n+\r\n+      {gigs.map((gig) => (\r\n+        <div\r\n+          key={gig._id}\r\n+          style={{\r\n+            border: \"1px solid #ccc\",\r\n+            padding: \"10px\",\r\n+            marginBottom: \"10px\"\r\n+          }}\r\n+        >\r\n           <h3>{gig.title}</h3>\r\n           <p>{gig.description}</p>\r\n-          <p>Budget: ₹{gig.budget}</p>\r\n+          <p><b>Budget:</b> ₹{gig.budget}</p>\r\n \r\n           <button>Apply</button>\r\n         </div>\r\n       ))}\r\n"
+                },
+                {
+                    "date": 1768195082511,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -29,9 +29,12 @@\n           <h3>{gig.title}</h3>\r\n           <p>{gig.description}</p>\r\n           <p><b>Budget:</b> ₹{gig.budget}</p>\r\n \r\n-          <button>Apply</button>\r\n+          <button onClick={() => navigate(`/apply/${gig._id}`)}>\r\n+  Apply\r\n+</button>\r\n+\r\n         </div>\r\n       ))}\r\n     </div>\r\n   );\r\n"
+                }
+            ],
+            "date": 1768184791847,
+            "name": "Commit-0",
+            "content": "import axios from \"axios\";\r\nimport { useEffect, useState } from \"react\";\r\n\r\nexport const BrowseJobs = () => {\r\n  const [gigs, setGigs] = useState([]);\r\n\r\n  useEffect(() => {\r\n    axios.get(\"http://localhost:5000/api/gigs\")\r\n      .then(res => setGigs(res.data));\r\n  }, []);\r\n\r\n  return (\r\n    <div>\r\n      <h2>Browse Jobs</h2>\r\n\r\n      {gigs.map(gig => (\r\n        <div key={gig._id}>\r\n          <h3>{gig.title}</h3>\r\n          <p>{gig.description}</p>\r\n          <p>Budget: ₹{gig.budget}</p>\r\n\r\n          <button>Apply</button>\r\n        </div>\r\n      ))}\r\n    </div>\r\n  );\r\n}\r\n\r\n\r\n"
+        }
+    ]
+}
