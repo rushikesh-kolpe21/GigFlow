@@ -11,7 +11,7 @@ export default function ViewApplications() {
     async function load() {
       try {
         const res = await axios.get(
-          `http://localhost:5000/api/bids/gig/${gigId}`,
+           `${import.meta.env.VITE_API_URL}/api/bids/gig/${gigId}`,
           { withCredentials: true }
         );
         setBids(res.data);
