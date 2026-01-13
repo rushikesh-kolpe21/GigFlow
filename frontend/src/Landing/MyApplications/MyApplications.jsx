@@ -28,7 +28,7 @@ function MyApplications() {
 
     try {
       setLoading(true);
-      const response = await axios.delete(`http://localhost:5000/api/bids/${bidId}`, {
+      const response = await axios.delete( `${import.meta.env.VITE_API_URL}/api/bids/${bidId}`, {
         withCredentials: true
       });
       
