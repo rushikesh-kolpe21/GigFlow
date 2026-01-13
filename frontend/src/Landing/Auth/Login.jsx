@@ -4,7 +4,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { handleError, handleSuccess } from "../../../utils";
 import axios from "axios";
-// import { GoogleLogin } from "./GoogleLogin";
+import { GoogleLogin } from "./GoogleLogin";
 
 
 export const Login = ({ setIsAuthenticated = () => {} }) => {
@@ -51,13 +51,13 @@ export const Login = ({ setIsAuthenticated = () => {} }) => {
 
       if (success) {
         handleSuccess(message);
-        // Persist the token so PrivateRoute sees it and avoids redirect loops
+        // Store token in localStorage for client-side checks
         localStorage.setItem("token", token);
+        // Store user object in localStorage for UI display
         if (user) {
           localStorage.setItem("user", JSON.stringify(user));
         }
-        // Cookies are automatically stored by the browser via Set-Cookie header
-        // No need to manually store in localStorage
+        // HTTP-Only cookie is automatically set by browser via Set-Cookie header
         setIsAuthenticated(true);
         setTimeout(() => {
           navigate("/gigs");
@@ -80,10 +80,10 @@ export const Login = ({ setIsAuthenticated = () => {} }) => {
           Login to Your Account
         </h1>
 
-        {/* <GoogleLogin setIsAuthenticated={setIsAuthenticated}
+        <GoogleLogin setIsAuthenticated={setIsAuthenticated}
          onSuccess={(res) => {
-    console.log(res.credential); // ✅ ID TOKEN */}
-  {/* }} /> */}
+    console.log(res.credential); 
+  }} />
 
         <form onSubmit={handleloginForm} className="space-y-5 text-left">
           <div className="flex flex-col items-start">

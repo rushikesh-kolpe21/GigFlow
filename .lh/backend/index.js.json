@@ -3,28 +3,16 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 3,
+            "activePatchIndex": 0,
             "patches": [
                 {
-                    "date": 1768153681324,
+                    "date": 1768299750618,
                     "content": "Index: \n===================================================================\n--- \n+++ \n"
-                },
-                {
-                    "date": 1768154039870,
-                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,16 +1,17 @@\n const express = require('express');\r\n const app = express();\r\n const cors = require('cors');\r\n-app.use(cors());\r\n-app.use(express.json());\r\n-\r\n const cookieParser = require('cookie-parser');\r\n \r\n+// CORS configuration for cookies\r\n app.use(cors({\r\n     origin: 'http://localhost:5173', // Your frontend URL\r\n-    credentials: true // Allow cookies\r\n+    credentials: true, // Allow cookies\r\n+    methods: ['GET', 'POST', 'PUT', 'DELETE'],\r\n+    allowedHeaders: ['Content-Type']\r\n }));\r\n+\r\n app.use(express.json());\r\n app.use(cookieParser());\r\n \r\n const PORT = process.env.PORT || 5000;\r\n"
-                },
-                {
-                    "date": 1768184185740,
-                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,13 @@\n // load environment variables\r\n require('dotenv').config();\r\n require('./Models/dbConn');// only checking connection\r\n \r\n+// gig router\r\n+const gigRouter = require('./Routers/Gig');\r\n+app.use('/api/gigs', gigRouter);\r\n \r\n+\r\n // Auth router\r\n const authRouter = require('./Routers/Auth');\r\n app.use('/api/auth', authRouter);\r\n \r\n"
-                },
-                {
-                    "date": 1768194867747,
-                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,8 +19,12 @@\n // load environment variables\r\n require('dotenv').config();\r\n require('./Models/dbConn');// only checking connection\r\n \r\n+// bid router\r\n+const bidRouter = require('./Routers/Bid');\r\n+app.use('/api/bids', bidRouter);\r\n+\r\n // gig router\r\n const gigRouter = require('./Routers/Gig');\r\n app.use('/api/gigs', gigRouter);\r\n \r\n"
                 }
             ],
-            "date": 1768153681324,
+            "date": 1768299750618,
             "name": "Commit-0",
-            "content": "const express = require('express');\r\nconst app = express();\r\nconst cors = require('cors');\r\napp.use(cors());\r\napp.use(express.json());\r\n\r\nconst cookieParser = require('cookie-parser');\r\n\r\napp.use(cors({\r\n    origin: 'http://localhost:5173', // Your frontend URL\r\n    credentials: true // Allow cookies\r\n}));\r\napp.use(express.json());\r\napp.use(cookieParser());\r\n\r\nconst PORT = process.env.PORT || 5000;\r\n\r\n// load environment variables\r\nrequire('dotenv').config();\r\nrequire('./Models/dbConn');// only checking connection\r\n\r\n\r\n// Auth router\r\nconst authRouter = require('./Routers/Auth');\r\napp.use('/api/auth', authRouter);\r\n\r\n// start the server\r\napp.listen(PORT, () => {\r\n    console.log(`Server is running on port: ${PORT}`);\r\n});\r\n"
+            "content": "const express = require('express');\r\nconst app = express();\r\nconst cors = require('cors');\r\nconst cookieParser = require('cookie-parser');\r\nconst http = require(\"http\");\r\nconst { Server } = require(\"socket.io\");\r\n\r\n// CORS configuration for cookies\r\napp.use(cors({\r\n    origin: 'http://localhost:5173', // Your frontend URL\r\n    credentials: true, // Allow cookies\r\n    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],\r\n    allowedHeaders: ['Content-Type', 'Authorization']\r\n}));\r\n\r\napp.use(express.json());\r\napp.use(cookieParser());\r\n\r\nconst PORT = process.env.PORT || 5000;\r\n\r\n// load environment variables\r\nrequire('dotenv').config();\r\nrequire('./Models/dbConn');// only checking connection\r\n\r\nconst server = http.createServer(app);\r\n\r\n\r\n// Socket.io server\r\nconst io = new Server(server, {\r\n  cors: {\r\n    origin: \"http://localhost:5173\",\r\n    credentials: true\r\n  }\r\n});\r\n\r\n// userId - socketId map\r\nconst onlineUsers = new Map();\r\n\r\nio.on(\"connection\", (socket) => {\r\n  console.log(\"Socket connected:\", socket.id);\r\n\r\n  socket.on(\"register\", (userId) => {\r\n     onlineUsers.set(userId.toString(), socket.id);\r\n     console.log(` User registered: ${userId.toString()} -> ${socket.id}`);\r\n  });\r\n\r\n  socket.on(\"disconnect\", () => {\r\n    for (let [key, value] of onlineUsers.entries()) {\r\n      if (value === socket.id) {\r\n        onlineUsers.delete(key);\r\n      }\r\n    }\r\n  });\r\n});\r\n\r\n// make available in routes\r\napp.set(\"io\", io);\r\napp.set(\"onlineUsers\", onlineUsers);\r\n\r\n\r\n\r\n// bid router\r\nconst bidRouter = require('./Routers/Bid');\r\napp.use('/api/bids', bidRouter);\r\n\r\n// gig router\r\nconst gigRouter = require('./Routers/Gig');\r\napp.use('/api/gigs', gigRouter);\r\n\r\n\r\n// Auth router\r\nconst authRouter = require('./Routers/Auth');\r\napp.use('/api/auth', authRouter);\r\n\r\n// start the server\r\nserver.listen(PORT, () => {\r\n    console.log(`Server is running on port: ${PORT}`);\r\n});\r\n"
         }
     ]
 }

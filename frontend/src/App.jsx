@@ -1,5 +1,5 @@
 import React from 'react'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { Signup } from './Landing/Auth/Signup.jsx';
 import { Login } from './Landing/Auth/Login.jsx';
@@ -11,6 +11,9 @@ import ApplyBid from './Landing/Browse Jobs/ApplyBid.jsx';
 import MyApplications from './Landing/MyApplications/MyApplications.jsx';
 import ViewBids from './Landing/MyJob/ViewBids.jsx';
 import MyJobs from './Landing/MyJob/MyJobs.jsx';
+import { socket } from "../socket";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 
 
@@ -20,6 +23,33 @@ export const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
     return !!localStorage.getItem('token'); // Check for token in localStorage on initial load hey ki nahi
   });
+  const [user, setUser] = useState(() => {
+    const stored = localStorage.getItem("user");
+    return stored ? JSON.parse(stored) : null;
+  });
+
+  // Sync user from localStorage when auth status changes
+  useEffect(() => {
+    const stored = localStorage.getItem("user");
+    setUser(stored ? JSON.parse(stored) : null);
+  }, [isAuthenticated]);
+
+  // Register socket globally so notifications show anywhere
+  useEffect(() => {
+    if (!user?.id) return;
+
+    socket.emit("register", user.id);
+
+    const hiredHandler = (data) => {
+      toast.success(data.message || "You have been hired");
+    };
+
+    socket.on("hired", hiredHandler);
+
+    return () => {
+      socket.off("hired", hiredHandler);
+    };
+  }, [user?.id]);
 
   // Private Route component for protected routes only for authenticated users
 const PrivateRoute = ({ children }) => {
@@ -128,6 +158,7 @@ const PublicRoute = ({ children }) => {
 
           <Route path="*" element={<Navigate to="/login" replace />} />
         </Routes>
+        <ToastContainer position="top-center" />
       </BrowserRouter>
     </div>
   )

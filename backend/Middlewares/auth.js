@@ -2,25 +2,29 @@ const jwt = require("jsonwebtoken");
 
 const auth = (req, res, next) => {
   try {
-    // 1️⃣ Cookie se token nikalo
+    // Cookie se token nikalo
     const token = req.cookies.token;
 
-    // 2️⃣ Token nahi hai → not logged in
+   
+
+    // Token nahi hai → not logged in
     if (!token) {
       return res.status(401).json({ message: "Not authenticated" });
     }
 
-    // 3️⃣ Token verify karo
+    //  Token verify karo
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
+   
 
-    // 4️⃣ req.user set karo - MATCH THE JWT PAYLOAD NAME (userId, not id)
+    //  req.user set karo - MATCH THE JWT PAYLOAD NAME (userId, not id)
     req.user = {
       id: decoded.userId
     };
 
-    // 5️⃣ Next route pe jao
+    // Next route pe jao
     next();
   } catch (error) {
+    console.log(" Token verification failed:", error.message);
     return res.status(401).json({ message: "Invalid or expired token" });
   }
 };
