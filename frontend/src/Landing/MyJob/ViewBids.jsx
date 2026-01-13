@@ -10,7 +10,7 @@ function ViewBids() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/bids/gig/${gigId}`, {
+      .get( `${import.meta.env.VITE_API_URL}/api/bids/gig/${gigId}`, {
         withCredentials: true
       })
       .then((res) => setBids(res.data))
@@ -25,7 +25,7 @@ function ViewBids() {
 
     try {
       await axios.patch(
-        `http://localhost:5000/api/bids/${bidId}/hire`,
+         `${import.meta.env.VITE_API_URL}/api/bids/${bidId}/hire`,
         {},
         { withCredentials: true }
       );
