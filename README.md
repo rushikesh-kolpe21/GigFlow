@@ -1,4 +1,5 @@
 # GigFlow - Assignment Requirements Status Report
+🔗LIVE LINK : https://gigflow-frontends.onrender.com
 
 ## ✅ COMPLETED FEATURES
 
