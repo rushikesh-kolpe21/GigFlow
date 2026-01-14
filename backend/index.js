@@ -7,7 +7,10 @@ const { Server } = require("socket.io");
 
 // CORS configuration for cookies
 app.use(cors({
-    origin: 'http://localhost:5173', // Your frontend URL
+    origin: [
+    "http://localhost:5173",
+    "https://gigflow-frontends.onrender.com" // EXACT frontend URL
+  ], // Your frontend URL
     credentials: true, // Allow cookies
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization']
