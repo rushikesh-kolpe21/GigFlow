@@ -28,7 +28,7 @@ export const BrowseJobs = () => {
   useEffect(() => {
     if (currentUser) {
       axios
-        .get("http://localhost:5000/api/bids/my", { withCredentials: true })
+        .get( `${import.meta.env.VITE_API_URL}/api/bids/my`, { withCredentials: true })
         .then((res) => setMyBids(res.data))
         .catch((err) => console.log(err));
     }

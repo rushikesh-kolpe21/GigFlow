@@ -15,7 +15,7 @@ function ApplyBid() {
 
     try {
       await axios.post(
-        "http://localhost:5000/api/bids",
+         `${import.meta.env.VITE_API_URL}`,
         { gigId, message, price },
         { withCredentials: true }
       );

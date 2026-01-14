@@ -21,7 +21,7 @@ export default function MyJobs() {
       try {
         setLoading(true);
         // Fetch user's posted jobs from backend
-        const res = await axios.get("http://localhost:5000/api/gigs/my-jobs", {
+        const res = await axios.get( `${import.meta.env.VITE_API_URL}/api/gigs/my-jobs`, {
           withCredentials: true
         });
         setJobs(res.data);

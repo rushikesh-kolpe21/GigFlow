@@ -211,17 +211,4 @@ if (!updatedGig) {
 
 ---
 
-## 📝 Submission Checklist
 
-- [ ] GitHub Repository Link (with complete source code)
-- [ ] README.md documentation
-- [ ] .env.example file
-- [ ] 2-minute Loom video of "Hiring" flow
-- [ ] Email to: ritik.yadav@servicehive.tech
-- [ ] CC: hiring@servicehive.tech
-
----
-
-## 🚀 Ready to Deploy
-
-Your application meets all assignment requirements and includes both bonus features!
