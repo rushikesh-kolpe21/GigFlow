@@ -1,0 +1,18 @@
+{
+    "sourceFile": "frontend/src/Landing/Browse Jobs/ViewApplications.jsx",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1768361668823,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1768361668823,
+            "name": "Commit-0",
+            "content": "import { useEffect, useState } from \"react\";\r\nimport api from \"../../api/axios\";\r\nimport { useParams } from \"react-router-dom\";\r\n\r\nexport default function ViewApplications() {\r\n  const { gigId } = useParams();\r\n  const [bids, setBids] = useState([]);\r\n  const [error, setError] = useState(\"\");\r\n\r\n  useEffect(() => {\r\n    async function load() {\r\n      try {\r\n        const res = await api.get(`/api/bids/gig/${gigId}`);\r\n        setBids(res.data);\r\n      } catch (err) {\r\n        setError(err.response?.data?.message || err.message);\r\n      }\r\n    }\r\n    load();\r\n  }, [gigId]);\r\n\r\n  if (error) {\r\n    return (\r\n      <div className=\"min-h-screen flex items-center justify-center bg-gray-50\">\r\n        <div className=\"bg-white border border-red-200 text-red-600 px-6 py-4 rounded-lg\">\r\n          Error: {error}\r\n        </div>\r\n      </div>\r\n    );\r\n  }\r\n\r\n  return (\r\n    <div className=\"min-h-screen bg-gray-50\">\r\n      <div className=\"max-w-6xl mx-auto px-4 py-8\">\r\n\r\n        {/* Header */}\r\n        <div className=\"mb-8\">\r\n          <h2 className=\"text-3xl font-bold text-gray-900\">\r\n            Applications for this Job\r\n          </h2>\r\n          <p className=\"text-gray-600 mt-1\">\r\n            Review proposals submitted by freelancers.\r\n          </p>\r\n        </div>\r\n\r\n        {bids.length === 0 && (\r\n          <p className=\"text-gray-500\">No applications yet.</p>\r\n        )}\r\n\r\n        {/* Applications Grid */}\r\n        <div className=\"\r\n          grid\r\n          grid-cols-1\r\n          md:grid-cols-2\r\n          gap-6\r\n        \">\r\n          {bids.map((b) => (\r\n            <div\r\n              key={b._id}\r\n              className=\"\r\n                bg-white\r\n                border border-gray-200\r\n                rounded-xl\r\n                p-6\r\n                shadow-sm\r\n                hover:shadow-md\r\n                transition\r\n              \"\r\n            >\r\n              <div className=\"mb-4\">\r\n                <h3 className=\"text-lg font-semibold text-gray-900 mb-1\">\r\n                  Proposal\r\n                </h3>\r\n                <p className=\"text-gray-600 text-sm\">\r\n                  {b.message}\r\n                </p>\r\n              </div>\r\n\r\n              <div className=\"flex items-center justify-between mb-4\">\r\n                <span className=\"text-sm text-gray-500\">Bid Amount</span>\r\n                <span className=\"text-lg font-semibold text-gray-900\">\r\n                  ₹{b.price}\r\n                </span>\r\n              </div>\r\n\r\n              {b.freelancerId && (\r\n                <div className=\"border-t pt-4 text-sm text-gray-700\">\r\n                  <p className=\"font-medium text-gray-900\">\r\n                    {b.freelancerId.firstName} {b.freelancerId.lastName}\r\n                  </p>\r\n                  <p className=\"text-gray-500\">\r\n                    {b.freelancerId.email}\r\n                  </p>\r\n                </div>\r\n              )}\r\n            </div>\r\n          ))}\r\n        </div>\r\n\r\n      </div>\r\n    </div>\r\n  );\r\n}\r\n"
+        }
+    ]
+}
