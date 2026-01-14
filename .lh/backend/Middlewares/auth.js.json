@@ -1,0 +1,18 @@
+{
+    "sourceFile": "backend/Middlewares/auth.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1768361772579,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1768361772579,
+            "name": "Commit-0",
+            "content": "const jwt = require(\"jsonwebtoken\");\r\n\r\nconst auth = (req, res, next) => {\r\n  try {\r\n    // Try to get token from Authorization header first, then from cookies\r\n    let token = null;\r\n    \r\n    // Check Authorization header (Bearer token)\r\n    const authHeader = req.headers.authorization || req.headers.Authorization;\r\n    if (authHeader && authHeader.startsWith('Bearer ')) {\r\n      token = authHeader.split(' ')[1];\r\n    }\r\n    \r\n    // If no Authorization header, check cookies\r\n    if (!token) {\r\n      token = req.cookies.token;\r\n    }\r\n\r\n    // Token nahi hai → not logged in\r\n    if (!token) {\r\n      return res.status(401).json({ message: \"Not authenticated\" });\r\n    }\r\n\r\n    //  Token verify karo\r\n    const decoded = jwt.verify(token, process.env.JWT_SECRET);\r\n   \r\n\r\n    //  req.user set karo - MATCH THE JWT PAYLOAD NAME (userId, not id)\r\n    req.user = {\r\n      id: decoded.userId\r\n    };\r\n\r\n    // Next route pe jao\r\n    next();\r\n  } catch (error) {\r\n    console.log(\" Token verification failed:\", error.message);\r\n    return res.status(401).json({ message: \"Invalid or expired token\" });\r\n  }\r\n};\r\n\r\nmodule.exports = auth;\r\n"
+        }
+    ]
+}
